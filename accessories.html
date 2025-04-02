@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اكسسوارات التصوير - ShotSpot Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .category-banner {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1598335624134-5bceb5de202b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .category-title {
+            color: white;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .category-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .filter-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .filter-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group-title {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            background-color: #f0f0f0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-option:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .filter-option.active {
+            background-color: #165b8a;
+            color: white;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-name {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #165b8a;
+            margin-bottom: 12px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #165b8a;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            color: #0f3a58;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            background-color: white;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .pagination-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .pagination-btn.active {
+            background-color: #165b8a;
+            color: white;
+        }
+        
+        @media (max-width: 992px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .category-title {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
+                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+                    <img src="camera-logo.png" alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
+                </a>
+            </div>
+
+            <div class="main-menu">
+                <a href="index.html">الصفحة الرئيسية</a>
+                <a href="about.html">من نحن</a>
+                <a href="services.html">خدماتنا</a>
+                <a href="contact.html">تواصل معنا</a>
+            </div>
+
+            <div class="header-actions">
+                <div class="icons-group">
+                    <div class="account-dropdown">
+                        <a href="login.html" class="user-icon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="account-menu">
+                            <a href="login.html">تسجيل الدخول</a>
+                            <a href="register.html">حساب جديد</a>
+                        </div>
+                    </div>
+                    <a href="favorites.html" class="heart-icon">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="ابحث عن منتجات...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- شريط متحرك للخدمات -->
+    <div class="services-ticker-container">
+        <div class="services-ticker">
+            <div class="ticker-content">
+                <div class="ticker-item"><i class="fas fa-truck"></i> توصيل سريع لجميع مناطق المملكة</div>
+                <div class="ticker-item"><i class="fas fa-shield-alt"></i> ضمان على جميع المنتجات</div>
+                <div class="ticker-item"><i class="fas fa-headset"></i> دعم فني على مدار الساعة</div>
+                <div class="ticker-item"><i class="fas fa-tools"></i> خدمات صيانة احترافية</div>
+                <div class="ticker-item"><i class="fas fa-graduation-cap"></i> دورات تدريبية في التصوير</div>
+                <div class="ticker-item"><i class="fas fa-camera"></i> أحدث معدات التصوير</div>
+                <div class="ticker-item"><i class="fas fa-percent"></i> عروض وخصومات دورية</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Banner -->
+    <div class="category-banner">
+        <h1 class="category-title">اكسسوارات التصوير</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="category-container">
+        <div class="row">
+            <!-- Filters Sidebar -->
+            <div class="filter-section">
+                <h3 class="filter-title">تصفية المنتجات</h3>
+                
+                <!-- Price Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-group-title">السعر</h4>
+                    <div class="filter-options">
+                        <div class="filter-option active">أقل من 500 ﷼</div>
+                        <div class="filter-option">500 - 1000 ﷼</div>
+                        <div class="filter-option">أكثر من 1000 ﷼</div>
+                    </div>
+                </div>
+                
+                <!-- Type Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-group-title">النوع</h4>
+                    <div class="filter-options">
+                        <div class="filter-option">حوامل</div>
+                        <div class="filter-option active">فلاش</div>
+                        <div class="filter-option">فلاتر</div>
+                        <div class="filter-option">بطاريات</div>
+                        <div class="filter-option">كروت ذاكرة</div>
+                    </div>
+                </div>
+                
+                <!-- Brand Filter -->
+                <div class="filter-group">
+                    <h4 class="filter-group-title">الماركة</h4>
+                    <div class="filter-options">
+                        <div class="filter-option">كانون</div>
+                        <div class="filter-option">نيكون</div>
+                        <div class="filter-option active">جودوكس</div>
+                        <div class="filter-option">مانفروتو</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="19048712-photooo.jpg" alt="فلاش خارجي">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">فلاش خارجي</h3>
+                        <div class="product-price">٧٨٠ ﷼</div>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn add-to-favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="placeholder.jpg" alt="حامل ثلاثي">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">حامل ثلاثي</h3>
+                        <div class="product-price">٤٥٠ ﷼</div>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn add-to-favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="placeholder.jpg" alt="فلتر عدسة">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">فلتر عدسة</h3>
+                        <div class="product-price">٣٢٠ ﷼</div>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn add-to-favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="placeholder.jpg" alt="بطارية احتياطية كانون">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">بطارية احتياطية كانون</h3>
+                        <div class="product-price">١٩٠ ﷼</div>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn add-to-favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="placeholder.jpg" alt="كارت ذاكرة 128GB">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">كارت ذاكرة 128GB</h3>
+                        <div class="product-price">٢٥٠ ﷼</div>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn add-to-favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="placeholder.jpg" alt="شاحن بطاريات متعدد">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">شاحن بطاريات متعدد</h3>
+                        <div class="product-price">١٦٠ ﷼</div>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn add-to-favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="placeholder.jpg" alt="ريموت كنترول لاسلكي">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">ريموت كنترول لاسلكي</h3>
+                        <div class="product-price">١١٠ ﷼</div>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn add-to-favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="placeholder.jpg" alt="غطاء عدسة">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">غطاء عدسة</h3>
+                        <div class="product-price">٧٥ ﷼</div>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn add-to-favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="pagination-btn active">1</div>
+                <div class="pagination-btn">2</div>
+                <div class="pagination-btn">3</div>
+                <div class="pagination-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ShotSpot</h3>
+                <p>متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="products.html">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>اتصل بنا</h3>
+                <p>
+                    <i class="fas fa-phone"></i>
+                    +966 11 234 5678
+                </p>
+                <p>
+                    <i class="fas fa-envelope"></i>
+                    info@ShotSpot.sa
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3>وسائل الدفع</h3>
+                <div class="payment-methods-footer">
+                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 4px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 4px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        // وظائف إدارة المفضلة والسلة
+        document.querySelectorAll('.add-to-favorites').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault(); // منع انتقال الرابط إذا كان الزر داخل رابط
+                e.stopPropagation(); // منع انتشار الحدث
+                
+                const card = this.closest('.product-card');
+                const productName = card.querySelector('.product-name').textContent;
+                const productPrice = card.querySelector('.product-price').textContent;
+                const productImage = card.querySelector('img').src;
+                
+                const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                const existingProduct = favorites.find(p => p.name === productName);
+                
+                if (existingProduct) {
+                    const index = favorites.indexOf(existingProduct);
+                    favorites.splice(index, 1);
+                    this.querySelector('i').style.color = '#165b8a';
+                    showNotification('تم إزالة المنتج من المفضلة');
+                } else {
+                    favorites.push({
+                        name: productName,
+                        price: productPrice,
+                        image: productImage
+                    });
+                    this.querySelector('i').style.color = '#e74c3c';
+                    showNotification('تم إضافة المنتج إلى المفضلة');
+                }
+                
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+            });
+        });
+        
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const card = this.closest('.product-card');
+                const productName = card.querySelector('.product-name').textContent;
+                const productPrice = card.querySelector('.product-price').textContent;
+                const productImage = card.querySelector('img').src;
+                
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingProduct = cart.find(p => p.name === productName);
+                
+                if (existingProduct) {
+                    existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+                    showNotification(`تم إضافة ${productName} (${existingProduct.quantity}) إلى السلة`);
+                } else {
+                    cart.push({
+                        name: productName,
+                        price: productPrice,
+                        image: productImage,
+                        quantity: 1
+                    });
+                    showNotification(`تم إضافة ${productName} إلى السلة`);
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                this.classList.add('pulse-animation');
+                setTimeout(() => {
+                    this.classList.remove('pulse-animation');
+                }, 500);
+            });
+        });
+        
+        // إضافة وظيفة الفلترة مع دعم للغة العربية
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const parent = this.parentElement;
+                parent.querySelectorAll('.filter-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const filterType = this.closest('.filter-group').querySelector('.filter-group-title').textContent;
+                const filterValue = this.textContent;
+                showNotification(`تم تطبيق فلتر: ${filterType} - ${filterValue}`);
+                
+                // قم بتطبيق التصفية عن طريق إضافة/إزالة فئة للمنتجات
+                // (هذا مثال بسيط، يجب تعديله للعمل مع معايير التصفية الفعلية)
+                if (filterType === "السعر") {
+                    filterByPrice(filterValue);
+                } else if (filterType === "النوع") {
+                    filterByType(filterValue);
+                } else if (filterType === "الماركة") {
+                    filterByBrand(filterValue);
+                }
+            });
+        });
+        
+        // وظائف التصفية (أمثلة)
+        function filterByPrice(priceRange) {
+            // يجب تنفيذ منطق التصفية الفعلي هنا
+            console.log("تصفية حسب السعر:", priceRange);
+        }
+        
+        function filterByType(type) {
+            // يجب تنفيذ منطق التصفية الفعلي هنا
+            console.log("تصفية حسب النوع:", type);
+        }
+        
+        function filterByBrand(brand) {
+            // يجب تنفيذ منطق التصفية الفعلي هنا
+            console.log("تصفية حسب الماركة:", brand);
+        }
+        
+        // إضافة عنصر الإشعارات إلى الصفحة بدعم للغة العربية
+        const notificationContainer = document.createElement('div');
+        notificationContainer.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: none;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            direction: rtl;
+            text-align: right;
+        `;
+        document.body.appendChild(notificationContainer);
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                background-color: #165b8a;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 4px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                margin-top: 10px;
+                font-size: 14px;
+                font-family: 'Cairo', 'Tajawal', sans-serif;
+            `;
+            notification.textContent = message;
+            
+            notificationContainer.style.display = 'block';
+            notificationContainer.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+                if (notificationContainer.children.length === 0) {
+                    notificationContainer.style.display = 'none';
+                }
+            }, 3000);
+        }
+        
+        // تحديث حالة أيقونات المفضلة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            document.querySelectorAll('.product-card').forEach(card => {
+                const productName = card.querySelector('.product-name').textContent;
+                const heartIcon = card.querySelector('.add-to-favorites i');
+                if (favorites.some(p => p.name === productName)) {
+                    heartIcon.style.color = '#e74c3c';
+                }
+            });
+            
+            // إضافة وظيفة لأزرار الترقيم
+            document.querySelectorAll('.pagination-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) {
+                        document.querySelector('.pagination-btn.active').classList.remove('active');
+                        this.classList.add('active');
+                        window.scrollTo({top: 0, behavior: 'smooth'});
+                        showNotification('جاري تحميل صفحة ' + this.textContent);
+                    }
+                });
+            });
+            
+            // تحديث عدد المنتجات في سلة التسوق
+            updateCartCount();
+        });
+        
+        // تحديث عدد المنتجات في سلة التسوق
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartIcon = document.querySelector('.cart-icon');
+            
+            if (cart.length > 0) {
+                // إذا لم يكن هناك عنصر العدد بالفعل، قم بإنشائه
+                let countBadge = cartIcon.querySelector('.cart-count');
+                if (!countBadge) {
+                    countBadge = document.createElement('span');
+                    countBadge.className = 'cart-count';
+                    countBadge.style.cssText = `
+                        position: absolute;
+                        top: -8px;
+                        right: -8px;
+                        background-color: #e74c3c;
+                        color: white;
+                        border-radius: 50%;
+                        width: 18px;
+                        height: 18px;
+                        font-size: 12px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    `;
+                    cartIcon.style.position = 'relative';
+                    cartIcon.appendChild(countBadge);
+                }
+                
+                // احسب العدد الإجمالي للمنتجات في السلة
+                const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+                countBadge.textContent = totalItems;
+            } else {
+                // إذا كانت السلة فارغة، قم بإزالة عنصر العدد إذا كان موجودًا
+                const countBadge = cartIcon.querySelector('.cart-count');
+                if (countBadge) {
+                    countBadge.remove();
+                }
+            }
+        }
+
+        // أنيميشن خاص بأزرار الإضافة
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .pulse-animation {
+                    animation: pulse 0.5s;
+                }
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.2); }
+                    100% { transform: scale(1); }
+                }
+                
+                .add-to-favorites i.favorited {
+                    color: #e74c3c !important;
+                }
+                
+                .product-card {
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+                
+                .product-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+                }
+                
+                .product-card:hover .product-info h3 {
+                    color: #165b8a;
+                }
+            </style>
+        `);
+        
+        // إضافة تأثيرات إضافية للمنتجات
+        document.querySelectorAll('.product-image').forEach(imgContainer => {
+            imgContainer.addEventListener('mouseenter', function() {
+                this.querySelector('img').style.transform = 'scale(1.1)';
+            });
+            
+            imgContainer.addEventListener('mouseleave', function() {
+                this.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html> 

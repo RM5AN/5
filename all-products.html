@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جميع المنتجات - متجر الكاميرات</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* نمط إضافي للهيدر لضمان التنسيق المناسب */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 100;
+        }
+        
+        .top-bar {
+            background-color: #165b8a;
+            color: white;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .contact-info {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .contact-info div {
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info i {
+            margin-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .social-links a {
+            color: white;
+            transition: color 0.2s;
+        }
+        
+        .social-links a:hover {
+            color: #f0f0f0;
+        }
+        
+        nav {
+            padding: 15px 0;
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 20px;
+        }
+        
+        .nav-links li a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .nav-links li a:hover {
+            color: #165b8a;
+        }
+        
+        .icons-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-container {
+            position: relative;
+            margin-left: 10px;
+        }
+        
+        .search-container input {
+            padding: 8px 35px 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+            transition: width 0.3s;
+        }
+        
+        .search-container input:focus {
+            width: 250px;
+            outline: none;
+            border-color: #165b8a;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .heart-icon, .cart-icon {
+            position: relative;
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .heart-icon:hover, .cart-icon:hover {
+            color: #165b8a;
+        }
+        
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background-color: #e53935;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* تنسيقات للشاشات المختلفة */
+        @media (max-width: 992px) {
+            .search-container input {
+                width: 150px;
+            }
+            
+            .search-container input:focus {
+                width: 200px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                margin: 10px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .icons-group {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-container {
+                margin: 0;
+            }
+            
+            .search-container input {
+                width: 100%;
+            }
+        }
+        
+        /* أنماط خاصة بصفحة جميع المنتجات */
+        .page-header {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .page-title {
+            color: #165b8a;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .filters-container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filter-group {
+            flex: 1 1 200px;
+            min-width: 200px;
+            max-width: 300px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .filter-group h4 {
+            color: #165b8a;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e6e6e6;
+            padding-bottom: 8px;
+        }
+        
+        .filter-option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-option input[type="checkbox"],
+        .filter-option input[type="radio"] {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        
+        .filter-option label {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .price-range input {
+            width: calc(50% - 10px);
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            outline: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .filter-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .apply-filters-btn {
+            background-color: #165b8a;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .reset-filters-btn {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .apply-filters-btn:hover {
+            background-color: #0d4b76;
+        }
+        
+        .reset-filters-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0;
+            margin: 0 auto 40px;
+            max-width: 1200px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            overflow: hidden;
+            position: relative;
+            padding-bottom: 75%;
+        }
+        
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 35px;
+            height: 35px;
+            background-color: white;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
+            transition: transform 0.2s;
+        }
+        
+        .wishlist-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .wishlist-btn i {
+            color: #888;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .wishlist-btn:hover i, .wishlist-btn.active i {
+            color: #e53935;
+        }
+        
+        .product-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .product-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            min-height: 40px;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .product-specs {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+            text-align: center;
+            min-height: 20px;
+            line-height: 1.4;
+        }
+        
+        .price {
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: ltr;
+            margin-bottom: 15px;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .sar-symbol {
+            width: 22px;
+            height: 22px;
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr8dtoYHY6kKKBe60P4wKoBG-gLreYxhttk6Cx2EIpjSPbPnq07ht4vBf7kMY8m7Npogg&usqp=CAU");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: inline-block;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        
+        .add-to-cart {
+            background-color: #165b8a;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: auto;
+            width: 100%;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #0d4b76;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0 40px;
+            gap: 5px;
+        }
+        
+        .pagination a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .pagination a.active {
+            background-color: #165b8a;
+            color: white;
+            border-color: #165b8a;
+        }
+        
+        .pagination a:hover:not(.active) {
+            background-color: #f0f0f0;
+        }
+        
+        /* تنسيقات للشاشات المختلفة */
+        @media (max-width: 992px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .filters-container {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .product-card h3 {
+                font-size: 14px;
+                min-height: 35px;
+            }
+            
+            .product-specs {
+                font-size: 12px;
+            }
+            
+            .price {
+                font-size: 16px;
+            }
+            
+            .add-to-cart {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+            
+            .page-title {
+                font-size: 22px;
+            }
+            
+            .page-subtitle {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 10px;
+            }
+            
+            .product-card {
+                padding-bottom: 5px;
+            }
+            
+            .product-info {
+                padding: 10px;
+            }
+            
+            .product-card h3 {
+                font-size: 12px;
+                min-height: 30px;
+                margin-bottom: 5px;
+            }
+            
+            .product-specs {
+                font-size: 11px;
+                margin-bottom: 10px;
+                min-height: 15px;
+            }
+            
+            .price {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .sar-symbol {
+                width: 18px;
+                height: 18px;
+            }
+            
+            .wishlist-btn {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .add-to-cart {
+                font-size: 11px;
+                padding: 6px 8px;
+            }
+            
+            .pagination a {
+                width: 35px;
+                height: 35px;
+                font-size: 13px;
+            }
+            
+            .page-title {
+                font-size: 20px;
+            }
+            
+            .page-subtitle {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- هيدر منسق بشكل أفضل -->
+    <header>
+        <!-- شريط علوي -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <div><i class="fas fa-phone"></i> 966123456789+</div>
+                    <div><i class="far fa-envelope"></i> info@cameras-store.com</div>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط التنقل -->
+        <nav>
+            <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                        <img src="images/logo.png" alt="شعار متجر الكاميرات">
+                </a>
+            </div>
+
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="cameras.html">كاميرات</a></li>
+                    <li><a href="lenses.html">عدسات</a></li>
+                    <li><a href="accessories.html">إكسسوارات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                </ul>
+                
+                <div class="icons-group">
+                    <div class="search-container">
+                        <input type="text" placeholder="البحث عن منتجات...">
+                        <button class="search-icon"><i class="fas fa-search"></i></button>
+                        </div>
+                    <a href="wishlist.html" class="heart-icon">
+                        <i class="far fa-heart"></i>
+                        <span class="wishlist-count">0</span>
+                    </a>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- عنوان الصفحة -->
+    <div class="page-header">
+        <h1 class="page-title">جميع المنتجات</h1>
+        <p class="page-subtitle">استعرض تشكيلتنا الواسعة من الكاميرات والعدسات والإكسسوارات</p>
+    </div>
+
+    <!-- فلاتر المنتجات -->
+    <div class="filters-container">
+        <div class="filter-group">
+            <h4>الشركة المصنعة</h4>
+            <div class="checkbox-group">
+                <div class="filter-option">
+                    <input type="checkbox" id="brand-canon" name="brand" value="canon">
+                    <label for="brand-canon">كانون</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="brand-nikon" name="brand" value="nikon">
+                    <label for="brand-nikon">نيكون</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="brand-sony" name="brand" value="sony">
+                    <label for="brand-sony">سوني</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="brand-fujifilm" name="brand" value="fujifilm">
+                    <label for="brand-fujifilm">فوجي فيلم</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <h4>السعر</h4>
+            <div class="price-range">
+                <input type="number" id="price-min" placeholder="من" min="0">
+                <span>-</span>
+                <input type="number" id="price-max" placeholder="إلى" min="0">
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <h4>الفئة</h4>
+            <select id="category-select">
+                <option value="">جميع الفئات</option>
+                <option value="cameras">كاميرات</option>
+                <option value="lenses">عدسات</option>
+                <option value="accessories">إكسسوارات</option>
+                <option value="lighting">إضاءة</option>
+                <option value="tripods">حوامل</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <h4>التقييم</h4>
+            <div class="filter-option">
+                <input type="radio" id="rating-all" name="rating" value="all" checked>
+                <label for="rating-all">الكل</label>
+            </div>
+            <div class="filter-option">
+                <input type="radio" id="rating-4plus" name="rating" value="4plus">
+                <label for="rating-4plus">4 نجوم فأعلى</label>
+            </div>
+            <div class="filter-option">
+                <input type="radio" id="rating-3plus" name="rating" value="3plus">
+                <label for="rating-3plus">3 نجوم فأعلى</label>
+            </div>
+        </div>
+        
+        <div class="filter-actions">
+            <button id="apply-filters" class="apply-filters-btn">تطبيق الفلاتر</button>
+            <button id="reset-filters" class="reset-filters-btn">إعادة ضبط</button>
+        </div>
+    </div>
+
+    <!-- عرض المنتجات -->
+    <div class="products-container">
+        <div class="products-grid">
+            <!-- منتج 1 -->
+            <div class="product-card" data-id="product-1">
+                <div class="product-image">
+                    <img src="images/products/camera1.jpg" alt="كاميرا كانون">
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>كاميرا كانون EOS 2000D</h3>
+                    <div class="product-specs">دقة 24 ميجابكسل، فيديو FHD</div>
+                    <div class="price">2199</div>
+                    <button class="add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <!-- منتج 2 -->
+            <div class="product-card" data-id="product-2">
+                <div class="product-image">
+                    <img src="images/products/lens1.jpg" alt="عدسة كانون">
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>عدسة كانون 50mm f/1.8</h3>
+                    <div class="product-specs">فتحة واسعة، وزن خفيف</div>
+                    <div class="price">599</div>
+                    <button class="add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <!-- منتج 3 -->
+            <div class="product-card" data-id="product-3">
+                <div class="product-image">
+                    <img src="images/products/camera2.jpg" alt="كاميرا نيكون">
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>كاميرا نيكون D3500</h3>
+                    <div class="product-specs">دقة 24 ميجابكسل، خفيفة الوزن</div>
+                    <div class="price">2499</div>
+                    <button class="add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <!-- منتج 4 -->
+            <div class="product-card" data-id="product-4">
+                <div class="product-image">
+                    <img src="images/products/accessory1.jpg" alt="حامل ثلاثي">
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>حامل ثلاثي احترافي</h3>
+                    <div class="product-specs">متين وخفيف الوزن، ارتفاع 175سم</div>
+                    <div class="price">399</div>
+                    <button class="add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <!-- منتج 5 -->
+            <div class="product-card" data-id="product-5">
+                <div class="product-image">
+                    <img src="images/products/camera3.jpg" alt="كاميرا سوني">
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>كاميرا سوني A6400</h3>
+                    <div class="product-specs">دقة 24 ميجابكسل، شاشة قابلة للتدوير</div>
+                    <div class="price">3999</div>
+                    <button class="add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <!-- منتج 6 -->
+            <div class="product-card" data-id="product-6">
+                <div class="product-image">
+                    <img src="images/products/lens2.jpg" alt="عدسة نيكون">
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>عدسة نيكون 35mm f/1.8</h3>
+                    <div class="product-specs">فتحة واسعة، جودة عالية</div>
+                    <div class="price">799</div>
+                    <button class="add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <!-- منتج 7 -->
+            <div class="product-card" data-id="product-7">
+                <div class="product-image">
+                    <img src="images/products/accessory2.jpg" alt="حقيبة كاميرا">
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>حقيبة كاميرا متينة</h3>
+                    <div class="product-specs">مقاومة للماء، سعة كبيرة</div>
+                    <div class="price">299</div>
+                    <button class="add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <!-- منتج 8 -->
+            <div class="product-card" data-id="product-8">
+                <div class="product-image">
+                    <img src="images/products/camera4.jpg" alt="كاميرا فوجي فيلم">
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>كاميرا فوجي فيلم X-T30</h3>
+                    <div class="product-specs">دقة 26 ميجابكسل، تصميم كلاسيكي</div>
+                    <div class="price">4299</div>
+                    <button class="add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الترقيم -->
+        <div class="pagination">
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#"><i class="fas fa-chevron-left"></i></a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ShotSpot</h3>
+                <p style="font-size: 14px;">متجر متخصص في بيع أحدث الكاميرات وملحقاتها بأفضل الأسعار. نقدم مجموعة واسعة من المنتجات الأصلية مع ضمان شامل.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="products.html">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>اتصل بنا</h3>
+                <p><i class="fas fa-phone"></i> +966 11 234 5678</p>
+                <p><i class="fas fa-envelope"></i> info@ShotSpot.sa</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>وسائل الدفع</h3>
+                <div class="payment-methods-footer">
+                    <img src="https://pbs.twimg.com/media/FNZXGQ6WQAgijTF.jpg" alt="مدى" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px; margin-left: 6px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png.png" alt="Visa" style="height: 25px; background-color: white; padding: 3px; border-radius: 3px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // استبدال كلمة "ريال" بشعار الريال
+            const priceElements = document.querySelectorAll('.price');
+            
+            priceElements.forEach(element => {
+                // الحصول على النص الرقمي فقط
+                let numericText = element.textContent.trim().replace(/[^\d٠١٢٣٤٥٦٧٨٩]/g, '');
+                
+                // إعادة هيكلة عنصر السعر
+                element.innerHTML = '';
+                
+                // إضافة الرقم
+                const priceSpan = document.createElement('span');
+                priceSpan.textContent = numericText;
+                element.appendChild(priceSpan);
+                
+                // إضافة شعار الريال
+                const symbolSpan = document.createElement('span');
+                symbolSpan.className = 'sar-symbol';
+                element.appendChild(symbolSpan);
+                
+                // تنسيق العنصر
+                element.style.direction = 'ltr';
+            });
+            
+            // أحداث المفضلة
+            const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+            wishlistBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                        icon.style.color = '#e53935';
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                        icon.style.color = '#888';
+                    }
+                });
+            });
+            
+            // أحداث سلة التسوق
+            const addToCartBtns = document.querySelectorAll('.add-to-cart');
+            addToCartBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('تمت إضافة المنتج إلى سلة التسوق');
+                });
+            });
+            
+            // أحداث زر الفلتر
+            const applyFiltersBtn = document.getElementById('apply-filters');
+            if (applyFiltersBtn) {
+                applyFiltersBtn.addEventListener('click', function() {
+                    alert('تم تطبيق الفلاتر');
+                });
+            }
+            
+            // أحداث إعادة ضبط الفلاتر
+            const resetFiltersBtn = document.getElementById('reset-filters');
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', function() {
+                    document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(input => {
+                        if (input.id === 'rating-all') {
+                            input.checked = true;
+                        } else if (input.type === 'checkbox') {
+                            input.checked = false;
+                        } else {
+                            input.checked = false;
+                        }
+                    });
+                    
+                    document.getElementById('price-min').value = '';
+                    document.getElementById('price-max').value = '';
+                    document.getElementById('category-select').value = '';
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
