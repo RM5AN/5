@@ -505,45 +505,42 @@
             margin: 0 auto;
         }
 
+        /* تنسيق البطاقات الأكثر شيوعاً */
         .popular-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
 
         .popular-card {
             background: white;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
-            max-width: 240px; /* تصغير حجم البطاقة */
-            margin: 0 auto;
+            position: relative;
         }
 
         .popular-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+            transform: translateY(-7px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
         .popular-image {
+            height: 180px;
             position: relative;
-            height: 160px; /* تصغير ارتفاع الصورة */
             overflow: hidden;
-            background-color: #f9f9f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .popular-image img {
-            width: 90%;
-            height: 90%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
+            padding: 10px;
         }
 
         .popular-card:hover .popular-image img {
@@ -556,89 +553,210 @@
             right: 10px;
             background: #165b8a;
             color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
             font-weight: bold;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
         .popular-content {
             padding: 15px;
-            text-align: center;
         }
 
         .popular-content h3 {
-            margin: 0 0 10px;
-            font-size: 16px;
-            color: #333;
-            font-weight: bold;
-            height: 38px;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            height: 42px;
+            overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            overflow: hidden;
         }
 
-        /* تصحيح شعار الريال ليكون على يسار السعر */
         .price {
+            font-weight: bold;
             color: #165b8a;
-            font-family: 'Tajawal', sans-serif;
             font-size: 18px;
-            font-weight: 600;
-            margin: 10px 0;
+            margin-bottom: 8px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            direction: ltr; /* تغيير من rtl إلى ltr */
+            flex-direction: row-reverse;
         }
 
-        .price span {
-            margin-left: 5px; /* تغيير من margin-right إلى margin-left */
-        }
-
-        /* تحديث موضع شعار الريال */
         .sar-symbol {
-            width: 22px;
-            height: 22px;
-            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr8dtoYHY6kKKBe60P4wKoBG-gLreYxhttk6Cx2EIpjSPbPnq07ht4vBf7kMY8m7Npogg&usqp=CAU");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            display: inline-block;
-            margin-right: 0; /* إزالة الهامش اليمين */
-            margin-left: 5px; /* إضافة هامش يسار */
-            vertical-align: middle;
-            order: 1; /* جعل شعار الريال بعد الرقم (على اليسار) */
+            font-size: 16px;
+            margin-right: 5px;
         }
 
         .rating {
             color: #ffc107;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .rating span {
             color: #777;
             margin-right: 5px;
+        }
+
+        /* أنماط النافذة المنبثقة */
+        .popular-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-popup {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 10;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease;
+            padding: 15px;
+            transition: opacity 0.3s, transform 0.3s;
+            overflow-y: auto;
+        }
+
+        .popular-card:hover .product-popup {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-header {
+            margin-bottom: 12px;
+        }
+
+        .popup-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .popup-details {
+            margin-bottom: 15px;
+        }
+
+        .popup-detail {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .popup-thumbs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .popup-thumb {
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .popup-thumb:hover {
+            border-color: #165b8a;
+        }
+
+        .popup-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popup-price {
+            display: flex;
+            align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            direction: rtl;
+            flex-direction: row-reverse;
+        }
+
+        .popup-sar-symbol {
+            margin-left: 5px;
+        }
+
+        .popup-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .popup-availability {
+            color: #4caf50;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .popup-availability i {
+            margin-left: 5px;
+        }
+
+        .popup-rating {
+            color: #ffc107;
             font-size: 12px;
         }
 
-        @media (max-width: 992px) {
-            .popular-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
+        .popup-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        @media (max-width: 576px) {
-            .popular-grid {
-                grid-template-columns: 1fr;
-            }
+        .popup-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
         }
 
-        #product-categories {
-            padding-top: 20px !important;
-            background-color: #eee !important;
+        .popup-cart {
+            background: #165b8a;
+            color: white;
+        }
+
+        .popup-favorite {
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        .popup-cart:hover {
+            background: #134a6d;
+        }
+
+        .popup-favorite:hover {
+            background: #e9ecef;
         }
 
         /* أنماط الفئات الدائرية */
@@ -1297,16 +1415,16 @@
         </div>
         
         <div class="popular-grid">
-            <a href="product-details.html" class="popular-card">
+            <a class="popular-card">
                 <div class="popular-image">
                     <img src="4547410470970 X-T30ll (1)-432x432.jpg" alt="كاميرا X-T30ll">
                     <span class="popular-badge">الأكثر مبيعاً</span>
-                </div>
+        </div>
                 <div class="popular-content">
                     <h3>كاميرا X-T30ll بدقة 26 ميجابكسل</h3>
                     <div class="price">
                         <span>٢,٥٨٠</span>
-                        <span class="sar-symbol"></span>
+                        <span class="sar-symbol">﷼</span>
                     </div>
                     <div class="rating">
                         <i class="fas fa-star"></i>
@@ -1317,9 +1435,63 @@
                         <span>(٤٥)</span>
                     </div>
                 </div>
+                <!-- نافذة منبثقة -->
+                <div class="product-popup">
+                    <div class="popup-header">
+                        <h3 class="popup-title">كاميرا X-T30ll بدقة 26 ميجابكسل</h3>
+                        <button class="popup-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-detail">
+                            <span class="detail-label">الدقة:</span>
+                            <span class="detail-value">26 ميجابكسل</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">نوع الكاميرا:</span>
+                            <span class="detail-value">كاميرات عديمة المرآة</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">الفيديو:</span>
+                            <span class="detail-value">4K</span>
+                        </div>
+                    </div>
+                    <div class="popup-thumbs">
+                        <div class="popup-thumb">
+                            <img src="4547410470970 X-T30ll (1)-432x432.jpg" alt="كاميرا X-T30ll - صورة 1">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="4547410470970 X-T30ll (2)-432x432.jpg" alt="كاميرا X-T30ll - صورة 2">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="4547410470970 X-T30ll (3)-432x432.jpg" alt="كاميرا X-T30ll - صورة 3">
+                        </div>
+                    </div>
+                    <div class="popup-price">
+                        <span>٢,٥٨٠</span>
+                        <span class="popup-sar-symbol">﷼</span>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="popup-availability">
+                            <i class="fas fa-check-circle"></i>
+                            متوفر في المخزون
+                        </div>
+                        <div class="popup-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            (4.5)
+                        </div>
+                    </div>
+                    <div class="popup-actions">
+                        <button class="popup-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="popup-favorite"><i class="fas fa-heart"></i> المفضلة</button>
+                    </div>
+                </div>
             </a>
 
-            <a href="product-details.html" class="popular-card">
+            <a class="popular-card">
                 <div class="popular-image">
                     <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما">
                     <span class="popular-badge">مميز</span>
@@ -1328,7 +1500,7 @@
                     <h3>عدسة سيجما بزاوية واسعة</h3>
                     <div class="price">
                         <span>٤,٨٠٠</span>
-                        <span class="sar-symbol"></span>
+                        <span class="sar-symbol">﷼</span>
                     </div>
                     <div class="rating">
                         <i class="fas fa-star"></i>
@@ -1339,31 +1511,139 @@
                         <span>(٣٢)</span>
                     </div>
                 </div>
+                <!-- نافذة منبثقة -->
+                <div class="product-popup">
+                    <div class="popup-header">
+                        <h3 class="popup-title">عدسة سيجما بزاوية واسعة</h3>
+                        <button class="popup-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-detail">
+                            <span class="detail-label">البعد البؤري:</span>
+                            <span class="detail-value">35mm</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">الفتحة:</span>
+                            <span class="detail-value">f/1.4</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">الوزن:</span>
+                            <span class="detail-value">665 جرام</span>
+                        </div>
+                    </div>
+                    <div class="popup-thumbs">
+                        <div class="popup-thumb">
+                            <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 1">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 2">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 3">
+                        </div>
+                    </div>
+                    <div class="popup-price">
+                        <span>٤,٨٠٠</span>
+                        <span class="popup-sar-symbol">﷼</span>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="popup-availability">
+                            <i class="fas fa-check-circle"></i>
+                            متوفر في المخزون
+                        </div>
+                        <div class="popup-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (4.0)
+                        </div>
+                    </div>
+                    <div class="popup-actions">
+                        <button class="popup-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="popup-favorite"><i class="fas fa-heart"></i> المفضلة</button>
+                    </div>
+                </div>
             </a>
 
-            <a href="product-details.html" class="popular-card">
+            <a class="popular-card">
                 <div class="popular-image">
                     <img src="micic.jpg" alt="ميكروفون شوتجن">
                     <span class="popular-badge">جديد</span>
                 </div>
                 <div class="popular-content">
-                    <h3>ميكروفون شوتجن احترافي</h3>
+                    <h3>ميكروفون شوتجن للكاميرات</h3>
                     <div class="price">
                         <span>٥٤٠</span>
-                        <span class="sar-symbol"></span>
+                        <span class="sar-symbol">﷼</span>
                     </div>
                     <div class="rating">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
                         <span>(٢٨)</span>
+                    </div>
+                </div>
+                <!-- نافذة منبثقة -->
+                <div class="product-popup">
+                    <div class="popup-header">
+                        <h3 class="popup-title">ميكروفون شوتجن للكاميرات</h3>
+                        <button class="popup-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-detail">
+                            <span class="detail-label">النوع:</span>
+                            <span class="detail-value">ميكروفون اتجاهي</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">الاستخدام:</span>
+                            <span class="detail-value">تصوير فيديو</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">التوافق:</span>
+                            <span class="detail-value">جميع الكاميرات</span>
+                        </div>
+                    </div>
+                    <div class="popup-thumbs">
+                        <div class="popup-thumb">
+                            <img src="micic.jpg" alt="ميكروفون - صورة 1">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="micic.jpg" alt="ميكروفون - صورة 2">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="micic.jpg" alt="ميكروفون - صورة 3">
+                        </div>
+                    </div>
+                    <div class="popup-price">
+                        <span>٥٤٠</span>
+                        <span class="popup-sar-symbol">﷼</span>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="popup-availability">
+                            <i class="fas fa-check-circle"></i>
+                            متوفر في المخزون
+                        </div>
+                        <div class="popup-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (4.0)
+                        </div>
+                    </div>
+                    <div class="popup-actions">
+                        <button class="popup-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="popup-favorite"><i class="fas fa-heart"></i> المفضلة</button>
                     </div>
                 </div>
             </a>
 
-            <a href="product-details.html" class="popular-card">
+            <a class="popular-card">
                 <div class="popular-image">
                     <img src="bag-1.jpg" alt="حقيبة كاميرا">
                     <span class="popular-badge">توفير ٢٠٪</span>
@@ -1372,7 +1652,7 @@
                     <h3>حقيبة كاميرا متعددة الاستخدامات</h3>
                     <div class="price">
                         <span>٣٤٩</span>
-                        <span class="sar-symbol"></span>
+                        <span class="sar-symbol">﷼</span>
                     </div>
                     <div class="rating">
                         <i class="fas fa-star"></i>
@@ -1381,6 +1661,60 @@
                         <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
                         <span>(٢٣)</span>
+                    </div>
+                </div>
+                <!-- نافذة منبثقة -->
+                <div class="product-popup">
+                    <div class="popup-header">
+                        <h3 class="popup-title">حقيبة كاميرا متعددة الاستخدامات</h3>
+                        <button class="popup-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-details">
+                        <div class="popup-detail">
+                            <span class="detail-label">الحجم:</span>
+                            <span class="detail-value">متوسط</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">المادة:</span>
+                            <span class="detail-value">نايلون مقاوم للماء</span>
+                        </div>
+                        <div class="popup-detail">
+                            <span class="detail-label">السعة:</span>
+                            <span class="detail-value">كاميرا DSLR وعدستين</span>
+                        </div>
+                    </div>
+                    <div class="popup-thumbs">
+                        <div class="popup-thumb">
+                            <img src="bag-1.jpg" alt="حقيبة كاميرا - صورة 1">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="bag-1.jpg" alt="حقيبة كاميرا - صورة 2">
+                        </div>
+                        <div class="popup-thumb">
+                            <img src="bag-1.jpg" alt="حقيبة كاميرا - صورة 3">
+                        </div>
+                    </div>
+                    <div class="popup-price">
+                        <span>٣٤٩</span>
+                        <span class="popup-sar-symbol">﷼</span>
+                    </div>
+                    <div class="popup-footer">
+                        <div class="popup-availability">
+                            <i class="fas fa-check-circle"></i>
+                            متوفر في المخزون
+                        </div>
+                        <div class="popup-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            (4.0)
+                        </div>
+                    </div>
+                    <div class="popup-actions">
+                        <button class="popup-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="popup-favorite"><i class="fas fa-heart"></i> المفضلة</button>
                     </div>
                 </div>
             </a>
@@ -1426,7 +1760,7 @@
                 <h3>روابط سريعة</h3>
                 <ul>
                     <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="products.html">المنتجات</a></li>
+                    <li><a href="all-products.html">المنتجات</a></li>
                     <li><a href="about.html">من نحن</a></li>
                     <li><a href="contact.html">تواصل معنا</a></li>
                 </ul>
@@ -1496,5 +1830,43 @@
     </div>
 
     <script src="all-products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة مستمعي أحداث لأزرار إغلاق النوافذ المنبثقة
+            document.querySelectorAll('.popup-close').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const popup = this.closest('.product-popup');
+                    popup.style.display = 'none';
+                });
+            });
+
+            // إضافة مستمعي أحداث لأزرار النوافذ المنبثقة
+            document.querySelectorAll('.popup-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    alert('تمت إضافة المنتج إلى سلة التسوق');
+                });
+            });
+
+            document.querySelectorAll('.popup-favorite').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    alert('تمت إضافة المنتج إلى المفضلة');
+                    this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة';
+                });
+            });
+
+            // منع انتقال الضغط على البوب أب إلى بطاقة المنتج
+            document.querySelectorAll('.product-popup').forEach(popup => {
+                popup.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+        });
+    });
+    </script>
 </body>
 </html>

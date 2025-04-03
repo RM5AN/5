@@ -93,10 +93,31 @@
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .camera-card:hover {
             transform: translateY(-5px);
+        }
+
+        .camera-card:hover .product-popup {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 10;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .camera-image {
@@ -183,11 +204,19 @@
         .add-to-cart {
             background: #165b8a;
             color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
         }
 
         .add-to-favorites {
             background: #f1f1f1;
             color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
         }
 
         .add-to-cart:hover {
@@ -196,6 +225,29 @@
 
         .add-to-favorites:hover {
             background: #e9ecef;
+        }
+
+        .view-details-btn {
+            background-color: #165b8a;
+            color: white;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .view-details-btn:hover {
+            background-color: #0d3b5a;
         }
 
         .pagination {
@@ -262,6 +314,396 @@
             .products-grid {
                 grid-template-columns: 1fr;
             }
+        }
+
+        /* أنماط النافذة المنبثقة */
+        .product-popup {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: auto;
+            max-height: 80%;
+            overflow-y: auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            padding: 15px;
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        .camera-card .product-popup {
+            display: none;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .popup-header {
+            margin-bottom: 12px;
+        }
+        
+        .popup-title {
+            font-size: 17px;
+        }
+        
+        .popup-details {
+            margin-bottom: 15px;
+        }
+        
+        .popup-detail {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .popup-thumbs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .popup-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        
+        .popup-thumb:hover {
+            border-color: #165b8a;
+        }
+        
+        .popup-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .popup-price {
+            display: flex;
+            align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            direction: ltr;
+        }
+        
+        .popup-sar-symbol {
+            width: 24px;
+            height: 24px;
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr8dtoYHY6kKKBe60P4wKoBG-gLreYxhttk6Cx2EIpjSPbPnq07ht4vBf7kMY8m7Npogg&usqp=CAU");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+            order: -1;
+        }
+        
+        .popup-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .popup-availability {
+            color: #4caf50;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .popup-availability i {
+            margin-left: 5px;
+        }
+        
+        .popup-rating {
+            color: #ffc107;
+            font-size: 12px;
+        }
+
+        /* أنماط النافذة المنبثقة الرئيسية (بوب أب) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            direction: rtl;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            width: 85%;
+            max-width: 900px;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #666;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #e74c3c;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            color: #165b8a;
+            font-weight: 700;
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .modal-body {
+            display: flex;
+            gap: 30px;
+        }
+
+        .modal-image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #modalMainImage {
+            width: 100%;
+            height: 350px;
+            object-fit: contain;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .modal-thumbnails {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-thumb {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-thumb:hover {
+            transform: scale(1.05);
+            border-color: #165b8a;
+        }
+
+        .modal-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-specs {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-spec {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: #444;
+        }
+
+        .modal-spec i {
+            color: #165b8a;
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* إضافة إغلاق النافذة */
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .modal-price {
+            display: flex;
+            align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 24px;
+            margin: 10px 0;
+            direction: rtl;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .modal-add-to-cart {
+            background: #165b8a;
+            color: white;
+        }
+
+        .modal-add-to-favorites {
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        .modal-add-to-cart:hover {
+            background: #134a6d;
+        }
+
+        .modal-add-to-favorites:hover {
+            background: #e9ecef;
+        }
+
+        .modal-availability {
+            color: #2ecc71;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .view-details-btn:hover {
+            background-color: #0d3b5a;
+        }
+
+        /* أكواد جديدة للنافذة المنبثقة المفصلة */
+        .modal-specs h3 {
+            color: #165b8a;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .modal-specs ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .modal-specs ul li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px dashed #f0f0f0;
+        }
+
+        .modal-specs ul li i {
+            color: #165b8a;
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .modal-additional-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-warranty, .modal-shipping {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .modal-warranty i, .modal-shipping i {
+            color: #165b8a;
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .modal-rating {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #ffc107;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -382,6 +824,57 @@
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
                         </div>
+                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة سيجما</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">24-70mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/2.8</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الخصائص:</span>
+                                <span class="detail-value">مقاومة للماء والغبار</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٤,٨٠٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -402,6 +895,61 @@
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة كانون</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">50mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/1.8</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">التركيز:</span>
+                                <span class="detail-value">تركيز تلقائي STM</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الخصم:</span>
+                                <span class="detail-value">15%</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة كانون - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة كانون - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة كانون - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١,٣٤٨</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                (4.0)
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -424,6 +972,61 @@
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
                         </div>
+                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة كانون مايكرو</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">24mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/2.8</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">التكبير:</span>
+                                <span class="detail-value">تكبير 1:1</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الحالة:</span>
+                                <span class="detail-value">جديد</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="4549292207309 24mm RF  (1)-220x220canon macro lens.jpg" alt="عدسة كانون مايكرو - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292207309 24mm RF  (1)-220x220canon macro lens.jpg" alt="عدسة كانون مايكرو - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292207309 24mm RF  (1)-220x220canon macro lens.jpg" alt="عدسة كانون مايكرو - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٢,٠٠٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                (5.0)
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -444,6 +1047,57 @@
                         <div class="camera-actions">
                             <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> حجز الآن</button>
                             <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                        <button class="view-details-btn"><i class="fas fa-search-plus"></i> عرض التفاصيل</button>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة تامرون 70-200mm</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">70-200mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/2.8</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">نوع الإيجار:</span>
+                                <span class="detail-value">إيجار يومي</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة تامرون - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة تامرون - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة تامرون - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١٥٠ ﷼/يوم</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر للحجز
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -472,7 +1126,7 @@
                 <h3>روابط سريعة</h3>
                 <ul>
                     <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="products.html">المنتجات</a></li>
+                    <li><a href="all-products.html">المنتجات</a></li>
                     <li><a href="about.html">من نحن</a></li>
                     <li><a href="contact.html">تواصل معنا</a></li>
                 </ul>
@@ -504,6 +1158,30 @@
             <p>© 2024 ShotSpot. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
+
+    <!-- قسم النافذة المنبثقة الرئيسية (بوب أب) -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img id="modalMainImage" src="" alt="صورة المنتج">
+                    <div class="modal-thumbnails" id="modalThumbnails"></div>
+                </div>
+                <div class="modal-details">
+                    <div class="modal-specs" id="modalSpecs"></div>
+                    <div class="modal-price" id="modalPrice"></div>
+                    <div class="modal-actions">
+                        <button class="modal-add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="modal-add-to-favorites"><i class="fas fa-heart"></i> إضافة للمفضلة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // وظائف التصفية والفرز
@@ -565,10 +1243,283 @@
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                this.querySelector('i').classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-heart');
+                this.querySelector('i').classList.toggle('fa-heart-o');
                 alert('تمت إضافة المنتج إلى المفضلة');
             });
         });
+
+        // إضافة وظيفة زر عرض التفاصيل
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // الحصول على بيانات البطاقة
+                const card = this.closest('.camera-card');
+                const title = card.querySelector('.camera-title').textContent;
+                const image = card.querySelector('.camera-image img').src;
+                const price = card.querySelector('.camera-price').textContent;
+                
+                // تحديث بيانات النافذة المنبثقة
+                document.getElementById('modalTitle').textContent = title;
+                document.getElementById('modalMainImage').src = image;
+                
+                // إنشاء الصور المصغرة
+                const thumbnailsContainer = document.getElementById('modalThumbnails');
+                thumbnailsContainer.innerHTML = '';
+                
+                // استخدام نفس الصورة 3 مرات للعرض التوضيحي
+                for (let i = 0; i < 3; i++) {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'modal-thumb';
+                    thumb.innerHTML = `<img src="${image}" alt="${title} - صورة ${i+1}">`;
+                    
+                    // تغيير الصورة الرئيسية عند النقر على المصغرة
+                    thumb.addEventListener('click', function() {
+                        document.getElementById('modalMainImage').src = this.querySelector('img').src;
+                    });
+                    
+                    thumbnailsContainer.appendChild(thumb);
+                }
+                
+                // إضافة المواصفات
+                const modalSpecs = document.getElementById('modalSpecs');
+                modalSpecs.innerHTML = '';
+                
+                // إضافة عنوان للمواصفات
+                const specsTitle = document.createElement('h3');
+                specsTitle.textContent = 'المواصفات';
+                modalSpecs.appendChild(specsTitle);
+                
+                // نسخ المواصفات من البطاقة
+                const specs = card.querySelectorAll('.camera-specs span');
+                const specsList = document.createElement('ul');
+                
+                specs.forEach(spec => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = spec.innerHTML;
+                    specsList.appendChild(listItem);
+                });
+                
+                modalSpecs.appendChild(specsList);
+                
+                // إضافة معلومات إضافية من النافذة المنبثقة الصغيرة إذا وجدت
+                const popupDetails = card.querySelector('.product-popup .popup-details');
+                if (popupDetails) {
+                    const popupDetailItems = popupDetails.querySelectorAll('.popup-detail');
+                    popupDetailItems.forEach(item => {
+                        const label = item.querySelector('.detail-label').textContent;
+                        const value = item.querySelector('.detail-value').textContent;
+                        
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `<i class="fas fa-info-circle"></i> <strong>${label}</strong> ${value}`;
+                        specsList.appendChild(listItem);
+                    });
+                }
+                
+                // إضافة معلومات التوفر مباشرة بعد المواصفات
+                const availabilityElement = document.createElement('div');
+                availabilityElement.className = 'modal-availability';
+                availabilityElement.innerHTML = '<i class="fas fa-check-circle"></i> متوفر في المخزون';
+                modalSpecs.appendChild(availabilityElement);
+                
+                // إضافة السعر
+                document.getElementById('modalPrice').textContent = price;
+                
+                // عرض النافذة المنبثقة
+                document.getElementById('productModal').style.display = 'block';
+            });
+        });
+
+        // وظائف النافذة المنبثقة
+        const modal = document.getElementById('productModal');
+        const closeBtn = document.getElementsByClassName('close-modal')[0];
+
+        // إغلاق النافذة المنبثقة عند النقر على زر الإغلاق
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // إغلاق النافذة المنبثقة عند النقر خارج المحتوى
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // إضافة وظائف لأزرار النافذة المنبثقة
+        document.querySelector('.modal-add-to-cart').addEventListener('click', function() {
+            alert('تمت إضافة المنتج إلى سلة التسوق');
+        });
+        
+        document.querySelector('.modal-add-to-favorites').addEventListener('click', function() {
+            alert('تمت إضافة المنتج إلى المفضلة');
+            this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة للمفضلة';
+        });
+        
+        // دالة عرض العدسات
+        const displayLenses = function(filteredArray) {
+            lensesContainer.innerHTML = '';
+            
+            // دوران على المنتجات وإنشاء بطاقات العرض
+            filteredArray.forEach(lens => {
+                const cameraCard = document.createElement('div');
+                cameraCard.className = 'camera-card';
+                cameraCard.dataset.operation = lens.operation;
+                cameraCard.dataset.category = lens.category;
+                
+                // إنشاء حاوية صورة المنتج
+                const cameraImageContainer = document.createElement('div');
+                cameraImageContainer.className = 'camera-image';
+                
+                // إضافة الصورة
+                const cameraImage = document.createElement('img');
+                cameraImage.src = lens.images[0];
+                cameraImage.alt = lens.name;
+                cameraImageContainer.appendChild(cameraImage);
+                
+                const cameraDetails = document.createElement('div');
+                cameraDetails.className = 'camera-details';
+                
+                // إضافة عنوان المنتج
+                const cameraTitle = document.createElement('h3');
+                cameraTitle.className = 'camera-title';
+                cameraTitle.textContent = lens.name;
+                cameraDetails.appendChild(cameraTitle);
+                
+                // إضافة سعر المنتج
+                const cameraPrice = document.createElement('p');
+                cameraPrice.className = 'camera-price';
+                cameraPrice.textContent = lens.operation === 'rent' ? `${lens.rentalPrice} ر.س / يوم` : `${lens.price} ر.س`;
+                cameraDetails.appendChild(cameraPrice);
+                
+                // إنشاء حاوية الأزرار
+                const cameraActions = document.createElement('div');
+                cameraActions.className = 'camera-actions';
+                
+                // إضافة زر سلة التسوق
+                const addToCartBtn = document.createElement('button');
+                addToCartBtn.className = 'add-to-cart';
+                addToCartBtn.dataset.id = lens.id;
+                addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> إضافة للسلة';
+                cameraActions.appendChild(addToCartBtn);
+                
+                // إضافة زر المفضلة
+                const addToFavoritesBtn = document.createElement('button');
+                addToFavoritesBtn.className = 'add-to-favorites';
+                addToFavoritesBtn.dataset.id = lens.id;
+                addToFavoritesBtn.innerHTML = '<i class="far fa-heart"></i> المفضلة';
+                cameraActions.appendChild(addToFavoritesBtn);
+                
+                cameraDetails.appendChild(cameraActions);
+                
+                // إضافة زر عرض التفاصيل
+                const viewDetailsBtn = document.createElement('button');
+                viewDetailsBtn.className = 'view-details-btn';
+                viewDetailsBtn.dataset.id = lens.id;
+                viewDetailsBtn.innerHTML = '<i class="fas fa-search-plus"></i> عرض التفاصيل';
+                cameraDetails.appendChild(viewDetailsBtn);
+                
+                // إضافة المكونات إلى بطاقة المنتج
+                cameraCard.appendChild(cameraImageContainer);
+                cameraCard.appendChild(cameraDetails);
+                
+                // إضافة بطاقة المنتج إلى الحاوية الرئيسية
+                lensesContainer.appendChild(cameraCard);
+                
+                // إضافة الاستماع للنقر على المنتج لإظهار التفاصيل
+                viewDetailsBtn.addEventListener('click', function() {
+                    const title = lens.name;
+                    const image = lens.images[0];
+                    const price = lens.operation === 'rent' ? `${lens.rentalPrice} ر.س / يوم` : `${lens.price} ر.س`;
+                    
+                    // تحديث بيانات النافذة المنبثقة
+                    document.getElementById('modalTitle').textContent = title;
+                    document.getElementById('modalMainImage').src = image;
+                    
+                    // إنشاء الصور المصغرة
+                    const thumbnailsContainer = document.getElementById('modalThumbnails');
+                    thumbnailsContainer.innerHTML = '';
+                    
+                    // استخدام الصور المتوفرة أو نفس الصورة لإكمال 3 صور
+                    const images = lens.images.length >= 3 ? lens.images : [image, image, image];
+                    images.slice(0, 3).forEach((img, index) => {
+                        const thumb = document.createElement('div');
+                        thumb.className = 'modal-thumb';
+                        thumb.innerHTML = `<img src="${img}" alt="${title} - صورة ${index+1}">`;
+                        
+                        thumb.addEventListener('click', function() {
+                            document.getElementById('modalMainImage').src = this.querySelector('img').src;
+                        });
+                        
+                        thumbnailsContainer.appendChild(thumb);
+                    });
+                    
+                    // إضافة المواصفات
+                    const modalSpecs = document.getElementById('modalSpecs');
+                    modalSpecs.innerHTML = '';
+                    
+                    // إضافة عنوان للمواصفات
+                    const specsTitle = document.createElement('h3');
+                    specsTitle.textContent = 'المواصفات';
+                    modalSpecs.appendChild(specsTitle);
+                    
+                    // نسخ المواصفات من البطاقة
+                    const specsList = document.createElement('ul');
+                    
+                    specs.forEach(spec => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = spec.innerHTML;
+                        specsList.appendChild(listItem);
+                    });
+                    
+                    modalSpecs.appendChild(specsList);
+                    
+                    // إضافة معلومات إضافية من النافذة المنبثقة الصغيرة إذا وجدت
+                    const popupDetails = card.querySelector('.product-popup .popup-details');
+                    if (popupDetails) {
+                        const popupDetailItems = popupDetails.querySelectorAll('.popup-detail');
+                        popupDetailItems.forEach(item => {
+                            const label = item.querySelector('.detail-label').textContent;
+                            const value = item.querySelector('.detail-value').textContent;
+                            
+                            const listItem = document.createElement('li');
+                            listItem.innerHTML = `<i class="fas fa-info-circle"></i> <strong>${label}</strong> ${value}`;
+                            specsList.appendChild(listItem);
+                        });
+                    }
+                    
+                    // إضافة معلومات التوفر
+                    const availabilityElement = document.createElement('div');
+                    availabilityElement.className = 'modal-availability';
+                    availabilityElement.innerHTML = '<i class="fas fa-check-circle"></i> متوفر في المخزون';
+                    modalSpecs.appendChild(availabilityElement);
+                    
+                    // إضافة السعر
+                    document.getElementById('modalPrice').textContent = price;
+                    
+                    // عرض النافذة المنبثقة
+                    document.getElementById('productModal').style.display = 'block';
+                });
+                
+                // إضافة وظائف للأزرار
+                addToCartBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const message = lens.operation === 'rent' ? 'تم إضافة العدسة إلى طلبات الحجز' : 'تمت إضافة المنتج إلى سلة التسوق';
+                    alert(message);
+                });
+                
+                addToFavoritesBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.querySelector('i').classList.toggle('fa-heart');
+                    this.querySelector('i').classList.toggle('fa-heart-o');
+                    alert('تمت إضافة المنتج إلى المفضلة');
+                });
+            });
+        };
     </script>
 </body>
 </html> 

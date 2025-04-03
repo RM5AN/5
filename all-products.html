@@ -3,895 +3,1263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جميع المنتجات - متجر الكاميرات</title>
+    <title>جميع المنتجات - ShotSpot</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* نمط إضافي للهيدر لضمان التنسيق المناسب */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 100;
+        /* أنماط صفحة عرض جميع المنتجات فقط */
+        .cameras-page {
+            padding: 40px 0;
+            background-color: #f8f9fa;
         }
-        
-        .top-bar {
-            background-color: #165b8a;
-            color: white;
-            padding: 8px 0;
-            font-size: 14px;
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
         }
-        
-        .top-bar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .contact-info {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .contact-info div {
-            display: flex;
-            align-items: center;
-        }
-        
-        .contact-info i {
-            margin-left: 5px;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .social-links a {
-            color: white;
-            transition: color 0.2s;
-        }
-        
-        .social-links a:hover {
-            color: #f0f0f0;
-        }
-        
-        nav {
-            padding: 15px 0;
-        }
-        
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo img {
-            height: 50px;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            gap: 20px;
-        }
-        
-        .nav-links li a {
+
+        .page-header h1 {
+            font-size: 32px;
             color: #333;
-            text-decoration: none;
-            transition: color 0.2s;
-            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: #666;
             font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        
-        .nav-links li a:hover {
-            color: #165b8a;
+
+        .filters-section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        
-        .icons-group {
-            display: flex;
-            align-items: center;
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
+            margin-bottom: 20px;
         }
-        
-        .search-container {
-            position: relative;
-            margin-left: 10px;
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
-        
-        .search-container input {
-            padding: 8px 35px 8px 10px;
+
+        .filter-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .filter-group select {
+            padding: 6px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            width: 200px;
-            transition: width 0.3s;
+            font-size: 14px;
         }
-        
-        .search-container input:focus {
-            width: 250px;
-            outline: none;
-            border-color: #165b8a;
+
+        .price-range {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
-        
-        .search-icon {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
+
+        .price-range input {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-        
-        .heart-icon, .cart-icon {
+
+        .cameras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 60px;
+        }
+
+        .camera-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
             position: relative;
-            color: #333;
-            text-decoration: none;
-            font-size: 18px;
         }
-        
-        .heart-icon:hover, .cart-icon:hover {
-            color: #165b8a;
+
+        .camera-card:hover {
+            transform: translateY(-5px);
         }
-        
-        .cart-count, .wishlist-count {
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            background-color: #e53935;
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 11px;
+
+        .camera-image {
+            position: relative;
+            height: 180px;
+            background: #f9f9f9;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
-        /* تنسيقات للشاشات المختلفة */
-        @media (max-width: 992px) {
-            .search-container input {
-                width: 150px;
-            }
-            
-            .search-container input:focus {
-                width: 200px;
-            }
-            
-            .nav-links {
-                gap: 15px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            nav .container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-links {
-                margin: 10px 0;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .icons-group {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .search-container {
-                margin: 0;
-            }
-            
-            .search-container input {
-                width: 100%;
-            }
-        }
-        
-        /* أنماط خاصة بصفحة جميع المنتجات */
-        .page-header {
-            text-align: center;
-            margin: 30px 0;
-        }
-        
-        .page-title {
-            color: #165b8a;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .page-subtitle {
-            color: #666;
-            font-size: 16px;
-            margin: 0;
-        }
-        
-        .filters-container {
-            background-color: #f8f9fa;
-            border-radius: 10px;
+
+        .camera-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
         }
-        
-        .filter-group {
-            flex: 1 1 200px;
-            min-width: 200px;
-            max-width: 300px;
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+
+        .camera-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #165b8a;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
         }
-        
-        .filter-group h4 {
-            color: #165b8a;
+
+        .camera-info {
+            padding: 20px;
+        }
+
+        .camera-title {
             font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #e6e6e6;
-            padding-bottom: 8px;
-        }
-        
-        .filter-option {
+            color: #333;
             margin-bottom: 8px;
+            font-weight: 600;
+            font-family: 'Tajawal', sans-serif;
+            line-height: 1.4;
+        }
+
+        .camera-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+            color: #666;
+            font-size: 13px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .camera-specs span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .camera-price {
+            font-weight: bold;
+            color: #165b8a;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .camera-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .camera-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart {
+            background: #165b8a;
+            color: white;
+        }
+
+        .add-to-favorites {
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        .add-to-cart:hover {
+            background: #134a6d;
+        }
+
+        .add-to-favorites:hover {
+            background: #e9ecef;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination button {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button.active {
+            background: #165b8a;
+            color: white;
+            border-color: #165b8a;
+        }
+
+        .pagination button:hover:not(.active) {
+            background: #f8f9fa;
+        }
+
+        /* للشاشات المتوسطة والصغيرة */
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cameras-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+
+            .camera-image {
+                height: 200px;
+            }
+        }
+
+        /* تنسيق عرض السعر ورمز الريال */
+        .price-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #165b8a;
+        }
+
+        .sar-symbol {
+            font-size: 16px;
+            color: #165b8a;
+            margin-left: 5px;
+        }
+
+        /* أنماط النافذة المنبثقة */
+        .product-popup {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: auto;
+            max-height: 80%;
+            overflow-y: auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            padding: 15px;
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .camera-card .product-popup {
+            display: none;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .popup-header {
+            margin-bottom: 12px;
+        }
+
+        .popup-title {
+            font-size: 17px;
+        }
+
+        .popup-details {
+            margin-bottom: 15px;
+        }
+
+        .popup-detail {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .popup-thumbs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .popup-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .popup-thumb:hover {
+            border-color: #165b8a;
+        }
+
+        .popup-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popup-price {
+            display: flex;
+            align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            direction: rtl;
+        }
+
+        .popup-sar-symbol {
+            margin-left: 5px;
+        }
+
+        .popup-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .popup-availability {
+            color: #4caf50;
+            font-size: 12px;
             display: flex;
             align-items: center;
         }
-        
-        .filter-option input[type="checkbox"],
-        .filter-option input[type="radio"] {
-            margin-left: 8px;
-            cursor: pointer;
+
+        .popup-availability i {
+            margin-left: 5px;
         }
-        
-        .filter-option label {
-            font-size: 14px;
+
+        .popup-rating {
+            color: #ffc107;
+            font-size: 12px;
+        }
+
+        /* أنماط النافذة المنبثقة الرئيسية (بوب أب) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            direction: rtl;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            width: 85%;
+            max-width: 900px;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #666;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #e74c3c;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            color: #165b8a;
+            font-weight: 700;
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .modal-body {
+            display: flex;
+            gap: 30px;
+        }
+
+        .modal-image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #modalMainImage {
+            width: 100%;
+            height: 350px;
+            object-fit: contain;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .modal-thumbnails {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-thumb {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-thumb:hover {
+            transform: scale(1.05);
+            border-color: #165b8a;
+        }
+
+        .modal-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-specs {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-spec {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: #444;
+        }
+
+        .modal-spec i {
+            color: #165b8a;
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .modal-price {
+            display: flex;
+            align-items: center;
+            color: #165b8a;
+            font-weight: 700;
+            font-size: 24px;
+            margin: 10px 0;
+            direction: rtl;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modal-add-to-cart {
+            background-color: #165b8a;
+            color: white;
+        }
+
+        .modal-add-to-favorites {
+            background-color: #f1f1f1;
             color: #333;
         }
-        
-        .price-range {
+
+        .modal-add-to-cart:hover {
+            background-color: #134a6d;
+        }
+
+        .modal-add-to-favorites:hover {
+            background-color: #e9ecef;
+        }
+
+        .modal-availability {
+            color: #2ecc71;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 5px;
             margin-top: 10px;
         }
-        
-        .price-range input {
-            width: calc(50% - 10px);
-            padding: 8px 12px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            outline: none;
-            font-size: 14px;
-        }
-        
-        select {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            background-color: white;
-            color: #333;
-            outline: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-family: inherit;
-        }
-        
-        .filter-actions {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            width: 100%;
-        }
-        
-        .apply-filters-btn {
+
+        /* إضافة زر عرض التفاصيل */
+        .view-details-btn {
+            display: block;
+            padding: 5px 10px;
             background-color: #165b8a;
             color: white;
-            padding: 8px 20px;
-            border-radius: 5px;
             border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            font-weight: 600;
-            font-size: 14px;
-            font-family: inherit;
-        }
-        
-        .reset-filters-btn {
-            background-color: #f8f9fa;
-            color: #333;
-            padding: 8px 20px;
             border-radius: 5px;
-            border: 1px solid #ddd;
             cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 600;
+            margin-top: 10px;
             font-size: 14px;
-            font-family: inherit;
+            transition: background-color 0.3s;
+            width: 100%;
         }
-        
-        .apply-filters-btn:hover {
-            background-color: #0d4b76;
+
+        .view-details-btn:hover {
+            background-color: #0d3b5a;
         }
-        
-        .reset-filters-btn:hover {
-            background-color: #e9ecef;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 0;
-            margin: 0 auto 40px;
-            max-width: 1200px;
-        }
-        
-        .product-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+
+        /* إضافة تفاعلية للنقر */
+        .camera-card {
             position: relative;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-        }
-        
-        .product-image {
             overflow: hidden;
-            position: relative;
-            padding-bottom: 75%;
+            transition: all 0.3s ease;
         }
-        
-        .product-image img {
+
+        .camera-card:hover .product-popup {
+            display: block;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 10;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease;
         }
-        
-        .product-card:hover .product-image img {
-            transform: scale(1.05);
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        
-        .wishlist-btn {
+
+        /* إضافة إغلاق النافذة */
+        .popup-close {
             position: absolute;
             top: 10px;
-            right: 10px;
-            width: 35px;
-            height: 35px;
-            background-color: white;
-            border-radius: 50%;
+            left: 10px;
+            background: none;
             border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 10;
-            transition: transform 0.2s;
-        }
-        
-        .wishlist-btn:hover {
-            transform: scale(1.1);
-        }
-        
-        .wishlist-btn i {
-            color: #888;
             font-size: 16px;
-            transition: color 0.3s;
-        }
-        
-        .wishlist-btn:hover i, .wishlist-btn.active i {
-            color: #e53935;
-        }
-        
-        .product-info {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-        
-        .product-info h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-            min-height: 40px;
-            text-align: center;
-            line-height: 1.4;
-        }
-        
-        .product-specs {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 15px;
-            text-align: center;
-            min-height: 20px;
-            line-height: 1.4;
-        }
-        
-        .price {
-            color: #165b8a;
-            font-weight: 700;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            direction: ltr;
-            margin-bottom: 15px;
-            font-family: 'Tajawal', sans-serif;
-        }
-        
-        .sar-symbol {
-            width: 22px;
-            height: 22px;
-            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr8dtoYHY6kKKBe60P4wKoBG-gLreYxhttk6Cx2EIpjSPbPnq07ht4vBf7kMY8m7Npogg&usqp=CAU");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            display: inline-block;
-            margin-left: 5px;
-            vertical-align: middle;
-        }
-        
-        .add-to-cart {
-            background-color: #165b8a;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            border: none;
             cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: auto;
-            width: 100%;
-            font-weight: 600;
-            font-size: 14px;
-            font-family: inherit;
-        }
-        
-        .add-to-cart:hover {
-            background-color: #0d4b76;
-        }
-        
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0 40px;
-            gap: 5px;
-        }
-        
-        .pagination a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            background-color: white;
-            color: #333;
-            text-decoration: none;
-            transition: all 0.2s;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        .pagination a.active {
-            background-color: #165b8a;
-            color: white;
-            border-color: #165b8a;
-        }
-        
-        .pagination a:hover:not(.active) {
-            background-color: #f0f0f0;
-        }
-        
-        /* تنسيقات للشاشات المختلفة */
-        @media (max-width: 992px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-            
-            .page-title {
-                font-size: 24px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .filters-container {
-                flex-direction: column;
-            }
-            
-            .filter-group {
-                width: 100%;
-                max-width: 100%;
-            }
-            
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            
-            .product-card h3 {
-                font-size: 14px;
-                min-height: 35px;
-            }
-            
-            .product-specs {
-                font-size: 12px;
-            }
-            
-            .price {
-                font-size: 16px;
-            }
-            
-            .add-to-cart {
-                font-size: 12px;
-                padding: 8px 10px;
-            }
-            
-            .page-title {
-                font-size: 22px;
-            }
-            
-            .page-subtitle {
-                font-size: 14px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-                gap: 10px;
-            }
-            
-            .product-card {
-                padding-bottom: 5px;
-            }
-            
-            .product-info {
-                padding: 10px;
-            }
-            
-            .product-card h3 {
-                font-size: 12px;
-                min-height: 30px;
-                margin-bottom: 5px;
-            }
-            
-            .product-specs {
-                font-size: 11px;
-                margin-bottom: 10px;
-                min-height: 15px;
-            }
-            
-            .price {
-                font-size: 14px;
-                margin-bottom: 10px;
-            }
-            
-            .sar-symbol {
-                width: 18px;
-                height: 18px;
-            }
-            
-            .wishlist-btn {
-                width: 30px;
-                height: 30px;
-            }
-            
-            .add-to-cart {
-                font-size: 11px;
-                padding: 6px 8px;
-            }
-            
-            .pagination a {
-                width: 35px;
-                height: 35px;
-                font-size: 13px;
-            }
-            
-            .page-title {
-                font-size: 20px;
-            }
-            
-            .page-subtitle {
-                font-size: 13px;
-            }
+            color: #777;
         }
     </style>
 </head>
 <body>
-    <!-- هيدر منسق بشكل أفضل -->
+    <!-- Header -->
     <header>
-        <!-- شريط علوي -->
-        <div class="top-bar">
-            <div class="container">
-                <div class="contact-info">
-                    <div><i class="fas fa-phone"></i> 966123456789+</div>
-                    <div><i class="far fa-envelope"></i> info@cameras-store.com</div>
-                </div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- شريط التنقل -->
         <nav>
-            <div class="container">
             <div class="logo">
                 <a href="index.html">
-                        <img src="images/logo.png" alt="شعار متجر الكاميرات">
+                    <img src="shotspot-logo.png-removebg-preview.png" alt="ShotSpot Logo" style="height: 45px;">
+                    <span style="margin-left: -15px; font-size: 26px;">ShotSpot</span>
+                    <alt="Camera Logo" style="height: 80px; margin-right: -25px; margin-left: -15px; position: relative; z-index: 1;">
                 </a>
             </div>
 
-                <ul class="nav-links">
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="cameras.html">كاميرات</a></li>
-                    <li><a href="lenses.html">عدسات</a></li>
-                    <li><a href="accessories.html">إكسسوارات</a></li>
-                    <li><a href="about.html">من نحن</a></li>
-                    <li><a href="contact.html">اتصل بنا</a></li>
-                </ul>
-                
+            <div class="main-menu">
+                <a href="index.html" class="active">الصفحة الرئيسية</a>
+                <a href="about.html">من نحن</a>
+                <a href="services.html">خدماتنا</a>
+                <a href="contact.html">تواصل معنا</a>
+            </div>
+
+            <div class="header-actions">
                 <div class="icons-group">
-                    <div class="search-container">
-                        <input type="text" placeholder="البحث عن منتجات...">
-                        <button class="search-icon"><i class="fas fa-search"></i></button>
+                    <div class="account-dropdown">
+                        <a href="#" class="user-icon">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="account-menu">
+                            <a href="login.html">تسجيل الدخول</a>
+                            <a href="register.html">حساب جديد</a>
+                            <a href="rent-request.html">طلب تأجير</a>
                         </div>
-                    <a href="wishlist.html" class="heart-icon">
-                        <i class="far fa-heart"></i>
-                        <span class="wishlist-count">0</span>
+                    </div>
+                    <a href="favorites.html" class="heart-icon">
+                        <i class="fas fa-heart"></i>
                     </a>
                     <a href="cart.html" class="cart-icon">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">0</span>
                     </a>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="ابحث عن منتجات...">
+                    <i class="fas fa-search search-icon"></i>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- عنوان الصفحة -->
-    <div class="page-header">
-        <h1 class="page-title">جميع المنتجات</h1>
-        <p class="page-subtitle">استعرض تشكيلتنا الواسعة من الكاميرات والعدسات والإكسسوارات</p>
-    </div>
+    <!-- Main Content -->
+    <main class="cameras-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>جميع المنتجات</h1>
+                <p>اكتشف مجموعتنا الكاملة من معدات التصوير الفوتوغرافي والفيديو بأفضل الأسعار</p>
+            </div>
 
-    <!-- فلاتر المنتجات -->
-    <div class="filters-container">
-        <div class="filter-group">
-            <h4>الشركة المصنعة</h4>
-            <div class="checkbox-group">
-                <div class="filter-option">
-                    <input type="checkbox" id="brand-canon" name="brand" value="canon">
-                    <label for="brand-canon">كانون</label>
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label>الفئة</label>
+                        <select name="category">
+                            <option value="">الكل</option>
+                            <option value="cameras">الكاميرات</option>
+                            <option value="lenses">العدسات</option>
+                            <option value="audio">الصوتيات</option>
+                            <option value="bags">الحقائب</option>
+                            <option value="accessories">الإكسسوارات</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>العلامة التجارية</label>
+                        <select name="brand">
+                            <option value="">الكل</option>
+                            <option value="canon">كانون</option>
+                            <option value="sony">سوني</option>
+                            <option value="nikon">نيكون</option>
+                            <option value="sigma">سيجما</option>
+                            <option value="tamron">تامرون</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>السعر</label>
+                        <select name="price">
+                            <option value="">الكل</option>
+                            <option value="0-500">حتى 500 ريال</option>
+                            <option value="501-1000">501 - 1000 ريال</option>
+                            <option value="1001-2000">1001 - 2000 ريال</option>
+                            <option value="2001-5000">2001 - 5000 ريال</option>
+                            <option value="5001+">أكثر من 5000 ريال</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>الترتيب</label>
+                        <select name="sort">
+                            <option value="featured">الأكثر مبيعاً</option>
+                            <option value="price-asc">السعر: من الأقل إلى الأعلى</option>
+                            <option value="price-desc">السعر: من الأعلى إلى الأقل</option>
+                            <option value="newest">الأحدث</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="brand-nikon" name="brand" value="nikon">
-                    <label for="brand-nikon">نيكون</label>
+            </section>
+
+            <!-- المنتجات -->
+            <section class="cameras-grid">
+                <!-- منتج 1 -->
+                <div class="camera-card" data-category="lenses" data-brand="sigma">
+                    <div class="camera-image">
+                        <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">عدسة سيجما</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-ruler-combined"></i> 35mm f/1.4</span>
+                            <span><i class="fas fa-weight"></i> 665 جرام</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٤,٨٠٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة سيجما</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">35mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/1.4</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الوزن:</span>
+                                <span class="detail-value">665 جرام</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">التوافق:</span>
+                                <span class="detail-value">كانون، نيكون، سوني</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="085126213657 Sigma Lens (1)-220x220.jpg" alt="عدسة سيجما - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٤,٨٠٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="brand-sony" name="brand" value="sony">
-                    <label for="brand-sony">سوني</label>
+
+                <!-- منتج 2 -->
+                <div class="camera-card" data-category="audio" data-brand="rode">
+                    <div class="camera-image">
+                        <img src="6941565991430 dji mic mini (1)-220x220.jpg" alt="ميكروفون شوتجن">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">ميكروفون شوتجن</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-microphone"></i> صوت احترافي</span>
+                            <span><i class="fas fa-battery-full"></i> بطارية طويلة الأمد</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٥٤٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">ميكروفون شوتجن</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">النوع:</span>
+                                <span class="detail-value">ميكروفون اتجاهي</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الاستخدام:</span>
+                                <span class="detail-value">تصوير فيديو</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">التوافق:</span>
+                                <span class="detail-value">جميع الكاميرات</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="6941565991430 dji mic mini (1)-220x220.jpg" alt="ميكروفون - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="6941565991430 dji mic mini (1)-220x220.jpg" alt="ميكروفون - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="6941565991430 dji mic mini (1)-220x220.jpg" alt="ميكروفون - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٥٤٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                (4.0)
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="brand-fujifilm" name="brand" value="fujifilm">
-                    <label for="brand-fujifilm">فوجي فيلم</label>
+
+                <!-- منتج 3 -->
+                <div class="camera-card" data-category="bags" data-brand="lowepro">
+                    <div class="camera-image">
+                        <img src="00089 puluz bag (1)-432x432.jpg" alt="حقيبة كاميرا">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">حقيبة كاميرا</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-shield-alt"></i> مقاومة للماء</span>
+                            <span><i class="fas fa-box"></i> سعة كبيرة</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٣٤٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">حقيبة كاميرا</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الحجم:</span>
+                                <span class="detail-value">متوسط</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">المادة:</span>
+                                <span class="detail-value">نايلون مقاوم للماء</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">السعة:</span>
+                                <span class="detail-value">كاميرا DSLR وعدستين</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">اللون:</span>
+                                <span class="detail-value">أسود</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="00089 puluz bag (1)-432x432.jpg" alt="حقيبة كاميرا - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="00089 puluz bag (1)-432x432.jpg" alt="حقيبة كاميرا - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="00089 puluz bag (1)-432x432.jpg" alt="حقيبة كاميرا - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٣٤٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                (5.0)
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- منتج 4 -->
+                <div class="camera-card" data-category="accessories" data-brand="manfrotto">
+                    <div class="camera-image">
+                        <img src="716vtUYq8-L._AC_SX679_holder.jpg" alt="ترايبود احترافي">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">ترايبود احترافي</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-arrows-alt-v"></i> ارتفاع 175 سم</span>
+                            <span><i class="fas fa-weight"></i> وزن خفيف</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٧٥٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">ترايبود احترافي</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الارتفاع:</span>
+                                <span class="detail-value">175 سم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الوزن:</span>
+                                <span class="detail-value">1.5 كغم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">المادة:</span>
+                                <span class="detail-value">ألومنيوم</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الحمولة:</span>
+                                <span class="detail-value">5 كغم</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="716vtUYq8-L._AC_SX679_holder.jpg" alt="ترايبود - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="716vtUYq8-L._AC_SX679_holder.jpg" alt="ترايبود - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="716vtUYq8-L._AC_SX679_holder.jpg" alt="ترايبود - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٧٥٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                (4.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- منتج 5 -->
+                <div class="camera-card" data-category="cameras" data-brand="canon">
+                    <div class="camera-image">
+                        <img src="4549292204889 R8 camera (1)-432x432.jpg" alt="كاميرا كانون D800">
+                        <div class="camera-badge">جديد</div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">كاميرا كانون D800</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-microchip"></i> 30 ميجابكسل</span>
+                            <span><i class="fas fa-film"></i> تصوير 4K</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٣,٢٠٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">كاميرا كانون D800</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الدقة:</span>
+                                <span class="detail-value">30 ميجابكسل</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">نوع الكاميرا:</span>
+                                <span class="detail-value">DSLR</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفيديو:</span>
+                                <span class="detail-value">4K</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">شاشة:</span>
+                                <span class="detail-value">3.2 بوصة LCD</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (1)-432x432.jpg" alt="كاميرا كانون - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (1)-432x432.jpg" alt="كاميرا كانون - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292204889 R8 camera (1)-432x432.jpg" alt="كاميرا كانون - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٣,٢٠٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                (5.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- منتج 6 -->
+                <div class="camera-card" data-category="lenses" data-brand="nikon">
+                    <div class="camera-image">
+                        <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة نيكون 50mm">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">عدسة نيكون 50mm</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-ruler-combined"></i> 50mm f/1.8</span>
+                            <span><i class="fas fa-weight"></i> 185 جرام</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">١,٢٠٠</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">عدسة نيكون 50mm</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">البعد البؤري:</span>
+                                <span class="detail-value">50mm</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الفتحة:</span>
+                                <span class="detail-value">f/1.8</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الوزن:</span>
+                                <span class="detail-value">185 جرام</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">التوافق:</span>
+                                <span class="detail-value">كاميرات نيكون</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة نيكون - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة نيكون - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="4549292167498 Lens (1)-220x220.jpg" alt="عدسة نيكون - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>١,٢٠٠</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                (4.5)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- منتج 7 -->
+                <div class="camera-card" data-category="bags" data-brand="peak-design">
+                    <div class="camera-image">
+                        <img src="11125 Case (1)-220x220 camera case for canon powershot G7X.jpg" alt="حقيبة معدات كبيرة">
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-title">حقيبة معدات كبيرة</h3>
+                        <div class="camera-specs">
+                            <span><i class="fas fa-shield-alt"></i> مقاومة للصدمات</span>
+                            <span><i class="fas fa-box"></i> تتسع لعدة كاميرات</span>
+                        </div>
+                        <div class="camera-price">
+                            <span class="price-number">٥٩٩</span>
+                            <span class="sar-symbol"></span>
+                        </div>
+                        <div class="camera-actions">
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                            <button class="add-to-favorites"><i class="fas fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <!-- نافذة منبثقة -->
+                    <div class="product-popup">
+                        <div class="popup-header">
+                            <h3 class="popup-title">حقيبة معدات كبيرة</h3>
+                            <button class="popup-close"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="popup-details">
+                            <div class="popup-detail">
+                                <span class="detail-label">الحجم:</span>
+                                <span class="detail-value">كبير</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">المادة:</span>
+                                <span class="detail-value">بوليستر مقاوم للصدمات</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">السعة:</span>
+                                <span class="detail-value">كاميرتين DSLR وعدة عدسات</span>
+                            </div>
+                            <div class="popup-detail">
+                                <span class="detail-label">الميزات:</span>
+                                <span class="detail-value">مقاومة للماء، تقسيمات قابلة للتعديل</span>
+                            </div>
+                        </div>
+                        <div class="popup-thumbs">
+                            <div class="popup-thumb">
+                                <img src="11125 Case (1)-220x220 camera case for canon powershot G7X.jpg" alt="حقيبة معدات - صورة 1">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="11125 Case (1)-220x220 camera case for canon powershot G7X.jpg" alt="حقيبة معدات - صورة 2">
+                            </div>
+                            <div class="popup-thumb">
+                                <img src="11125 Case (1)-220x220 camera case for canon powershot G7X.jpg" alt="حقيبة معدات - صورة 3">
+                            </div>
+                        </div>
+                        <div class="popup-price">
+                            <span class="popup-sar-symbol"></span>
+                            <span>٥٩٩</span>
+                        </div>
+                        <div class="popup-footer">
+                            <div class="popup-availability">
+                                <i class="fas fa-check-circle"></i>
+                                متوفر في المخزون
+                            </div>
+                            <div class="popup-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                (4.0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- الترقيم -->
+            <div class="pagination">
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>التالي</button>
             </div>
         </div>
-        
-        <div class="filter-group">
-            <h4>السعر</h4>
-            <div class="price-range">
-                <input type="number" id="price-min" placeholder="من" min="0">
-                <span>-</span>
-                <input type="number" id="price-max" placeholder="إلى" min="0">
-            </div>
-        </div>
-        
-        <div class="filter-group">
-            <h4>الفئة</h4>
-            <select id="category-select">
-                <option value="">جميع الفئات</option>
-                <option value="cameras">كاميرات</option>
-                <option value="lenses">عدسات</option>
-                <option value="accessories">إكسسوارات</option>
-                <option value="lighting">إضاءة</option>
-                <option value="tripods">حوامل</option>
-            </select>
-        </div>
-        
-        <div class="filter-group">
-            <h4>التقييم</h4>
-            <div class="filter-option">
-                <input type="radio" id="rating-all" name="rating" value="all" checked>
-                <label for="rating-all">الكل</label>
-            </div>
-            <div class="filter-option">
-                <input type="radio" id="rating-4plus" name="rating" value="4plus">
-                <label for="rating-4plus">4 نجوم فأعلى</label>
-            </div>
-            <div class="filter-option">
-                <input type="radio" id="rating-3plus" name="rating" value="3plus">
-                <label for="rating-3plus">3 نجوم فأعلى</label>
-            </div>
-        </div>
-        
-        <div class="filter-actions">
-            <button id="apply-filters" class="apply-filters-btn">تطبيق الفلاتر</button>
-            <button id="reset-filters" class="reset-filters-btn">إعادة ضبط</button>
-        </div>
-    </div>
-
-    <!-- عرض المنتجات -->
-    <div class="products-container">
-        <div class="products-grid">
-            <!-- منتج 1 -->
-            <div class="product-card" data-id="product-1">
-                <div class="product-image">
-                    <img src="images/products/camera1.jpg" alt="كاميرا كانون">
-                    <button class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <h3>كاميرا كانون EOS 2000D</h3>
-                    <div class="product-specs">دقة 24 ميجابكسل، فيديو FHD</div>
-                    <div class="price">2199</div>
-                    <button class="add-to-cart">إضافة إلى السلة</button>
-                </div>
-            </div>
-
-            <!-- منتج 2 -->
-            <div class="product-card" data-id="product-2">
-                <div class="product-image">
-                    <img src="images/products/lens1.jpg" alt="عدسة كانون">
-                    <button class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <h3>عدسة كانون 50mm f/1.8</h3>
-                    <div class="product-specs">فتحة واسعة، وزن خفيف</div>
-                    <div class="price">599</div>
-                    <button class="add-to-cart">إضافة إلى السلة</button>
-                </div>
-            </div>
-
-            <!-- منتج 3 -->
-            <div class="product-card" data-id="product-3">
-                <div class="product-image">
-                    <img src="images/products/camera2.jpg" alt="كاميرا نيكون">
-                    <button class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <h3>كاميرا نيكون D3500</h3>
-                    <div class="product-specs">دقة 24 ميجابكسل، خفيفة الوزن</div>
-                    <div class="price">2499</div>
-                    <button class="add-to-cart">إضافة إلى السلة</button>
-                </div>
-            </div>
-
-            <!-- منتج 4 -->
-            <div class="product-card" data-id="product-4">
-                <div class="product-image">
-                    <img src="images/products/accessory1.jpg" alt="حامل ثلاثي">
-                    <button class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <h3>حامل ثلاثي احترافي</h3>
-                    <div class="product-specs">متين وخفيف الوزن، ارتفاع 175سم</div>
-                    <div class="price">399</div>
-                    <button class="add-to-cart">إضافة إلى السلة</button>
-                </div>
-            </div>
-
-            <!-- منتج 5 -->
-            <div class="product-card" data-id="product-5">
-                <div class="product-image">
-                    <img src="images/products/camera3.jpg" alt="كاميرا سوني">
-                    <button class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <h3>كاميرا سوني A6400</h3>
-                    <div class="product-specs">دقة 24 ميجابكسل، شاشة قابلة للتدوير</div>
-                    <div class="price">3999</div>
-                    <button class="add-to-cart">إضافة إلى السلة</button>
-                </div>
-            </div>
-
-            <!-- منتج 6 -->
-            <div class="product-card" data-id="product-6">
-                <div class="product-image">
-                    <img src="images/products/lens2.jpg" alt="عدسة نيكون">
-                    <button class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <h3>عدسة نيكون 35mm f/1.8</h3>
-                    <div class="product-specs">فتحة واسعة، جودة عالية</div>
-                    <div class="price">799</div>
-                    <button class="add-to-cart">إضافة إلى السلة</button>
-                </div>
-            </div>
-
-            <!-- منتج 7 -->
-            <div class="product-card" data-id="product-7">
-                <div class="product-image">
-                    <img src="images/products/accessory2.jpg" alt="حقيبة كاميرا">
-                    <button class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <h3>حقيبة كاميرا متينة</h3>
-                    <div class="product-specs">مقاومة للماء، سعة كبيرة</div>
-                    <div class="price">299</div>
-                    <button class="add-to-cart">إضافة إلى السلة</button>
-                </div>
-            </div>
-
-            <!-- منتج 8 -->
-            <div class="product-card" data-id="product-8">
-                <div class="product-image">
-                    <img src="images/products/camera4.jpg" alt="كاميرا فوجي فيلم">
-                    <button class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <h3>كاميرا فوجي فيلم X-T30</h3>
-                    <div class="product-specs">دقة 26 ميجابكسل، تصميم كلاسيكي</div>
-                    <div class="price">4299</div>
-                    <button class="add-to-cart">إضافة إلى السلة</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- الترقيم -->
-        <div class="pagination">
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#"><i class="fas fa-chevron-left"></i></a>
-        </div>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -905,7 +1273,7 @@
                 <h3>روابط سريعة</h3>
                 <ul>
                     <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="products.html">المنتجات</a></li>
+                    <li><a href="all-products.html">المنتجات</a></li>
                     <li><a href="about.html">من نحن</a></li>
                     <li><a href="contact.html">تواصل معنا</a></li>
                 </ul>
@@ -938,85 +1306,213 @@
         </div>
     </footer>
 
+    <!-- قسم النافذة المنبثقة الرئيسية (بوب أب) -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img id="modalMainImage" src="" alt="صورة المنتج">
+                    <div class="modal-thumbnails" id="modalThumbnails"></div>
+                </div>
+                <div class="modal-details">
+                    <div class="modal-specs" id="modalSpecs"></div>
+                    <div class="modal-price" id="modalPrice"></div>
+                    <div class="modal-actions">
+                        <button class="modal-add-to-cart"><i class="fas fa-shopping-cart"></i> إضافة للسلة</button>
+                        <button class="modal-add-to-favorites"><i class="fas fa-heart"></i> إضافة للمفضلة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // استبدال كلمة "ريال" بشعار الريال
-            const priceElements = document.querySelectorAll('.price');
+        // وظائف التصفية والفرز
+        function filterProducts() {
+            const category = document.querySelector('select[name="category"]').value;
+            const brand = document.querySelector('select[name="brand"]').value;
+            const price = document.querySelector('select[name="price"]').value;
             
-            priceElements.forEach(element => {
-                // الحصول على النص الرقمي فقط
-                let numericText = element.textContent.trim().replace(/[^\d٠١٢٣٤٥٦٧٨٩]/g, '');
-                
-                // إعادة هيكلة عنصر السعر
-                element.innerHTML = '';
-                
-                // إضافة الرقم
-                const priceSpan = document.createElement('span');
-                priceSpan.textContent = numericText;
-                element.appendChild(priceSpan);
-                
-                // إضافة شعار الريال
-                const symbolSpan = document.createElement('span');
-                symbolSpan.className = 'sar-symbol';
-                element.appendChild(symbolSpan);
-                
-                // تنسيق العنصر
-                element.style.direction = 'ltr';
-            });
+            const products = document.querySelectorAll('.camera-card');
+            let visibleCount = 0;
             
-            // أحداث المفضلة
-            const wishlistBtns = document.querySelectorAll('.wishlist-btn');
-            wishlistBtns.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                        icon.style.color = '#e53935';
+            products.forEach(product => {
+                const matchCategory = !category || product.dataset.category === category;
+                const matchBrand = !brand || product.dataset.brand === brand;
+                // يمكن إضافة تصفية السعر هنا
+                
+                if (matchCategory && matchBrand) {
+                    product.style.display = 'block';
+                    visibleCount++;
                 } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                        icon.style.color = '#888';
-                    }
-                });
+                    product.style.display = 'none';
+                }
             });
             
-            // أحداث سلة التسوق
-            const addToCartBtns = document.querySelectorAll('.add-to-cart');
-            addToCartBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    alert('تمت إضافة المنتج إلى سلة التسوق');
-                });
-            });
-            
-            // أحداث زر الفلتر
-            const applyFiltersBtn = document.getElementById('apply-filters');
-            if (applyFiltersBtn) {
-                applyFiltersBtn.addEventListener('click', function() {
-                    alert('تم تطبيق الفلاتر');
-                });
+            // إظهار رسالة إذا لم يتم العثور على نتائج
+            const noResults = document.getElementById('no-results');
+            if (visibleCount === 0) {
+                if (!noResults) {
+                    const message = document.createElement('div');
+                    message.id = 'no-results';
+                    message.style.textAlign = 'center';
+                    message.style.padding = '20px';
+                    message.style.width = '100%';
+                    message.innerHTML = 'لا توجد منتجات تطابق معايير البحث';
+                    document.querySelector('.cameras-grid').appendChild(message);
+                }
+            } else if (noResults) {
+                noResults.remove();
             }
-            
-            // أحداث إعادة ضبط الفلاتر
-            const resetFiltersBtn = document.getElementById('reset-filters');
-            if (resetFiltersBtn) {
-                resetFiltersBtn.addEventListener('click', function() {
-                    document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(input => {
-                        if (input.id === 'rating-all') {
-                            input.checked = true;
-                        } else if (input.type === 'checkbox') {
-                            input.checked = false;
-                        } else {
-                            input.checked = false;
-                        }
-                    });
+        }
+
+        // إضافة event listeners للتصفية
+        document.querySelectorAll('.filters-section select').forEach(select => {
+            select.addEventListener('change', filterProducts);
+        });
+
+        // إضافة وظائف سلة التسوق والمفضلة
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                alert('تمت إضافة المنتج إلى سلة التسوق');
+            });
+        });
+
+        document.querySelectorAll('.add-to-favorites').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.querySelector('i').classList.toggle('active');
+                alert('تمت إضافة المنتج إلى المفضلة');
+            });
+        });
+
+        // إضافة المستمعين للنقر على بطاقات المنتجات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // وظائف النافذة المنبثقة (بوب أب)
+            const modal = document.getElementById('productModal');
+            const closeModal = document.querySelector('.close-modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMainImage = document.getElementById('modalMainImage');
+            const modalThumbnails = document.getElementById('modalThumbnails');
+            const modalSpecs = document.getElementById('modalSpecs');
+            const modalPrice = document.getElementById('modalPrice');
+
+            // إغلاق النافذة عند النقر على زر الإغلاق
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            // إغلاق النافذة عند النقر خارج المحتوى
+            window.addEventListener('click', function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // إضافة أزرار النافذة المنبثقة لكل بطاقة
+            document.querySelectorAll('.camera-card').forEach(card => {
+                // إضافة زر لفتح النافذة المنبثقة
+                const viewDetailsBtn = document.createElement('button');
+                viewDetailsBtn.className = 'view-details-btn';
+                viewDetailsBtn.innerHTML = '<i class="fas fa-search-plus"></i> عرض التفاصيل';
+                
+                // إضافة الزر إلى حاوية بطاقة المنتج
+                const cardInfo = card.querySelector('.camera-info');
+                cardInfo.appendChild(viewDetailsBtn);
+                
+                // إضافة مستمع الحدث للزر
+                viewDetailsBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     
-                    document.getElementById('price-min').value = '';
-                    document.getElementById('price-max').value = '';
-                    document.getElementById('category-select').value = '';
+                    // استخراج البيانات من البطاقة
+                    const title = card.querySelector('.camera-title').textContent;
+                    const image = card.querySelector('.camera-image img').src;
+                    const price = card.querySelector('.camera-price').textContent;
+                    const specs = card.querySelectorAll('.camera-specs span');
+
+                    // تحديث محتوى النافذة المنبثقة
+                    modalTitle.textContent = title;
+                    modalMainImage.src = image;
+                    modalMainImage.alt = title;
+                    modalPrice.innerHTML = `<span class="popup-sar-symbol"></span><span>${price}</span>`;
+
+                    // إضافة الصور المصغرة (3 نسخ من نفس الصورة في هذه الحالة)
+                    modalThumbnails.innerHTML = '';
+                    for (let i = 0; i < 3; i++) {
+                        const thumb = document.createElement('div');
+                        thumb.className = 'modal-thumb';
+                        thumb.innerHTML = `<img src="${image}" alt="${title} - صورة ${i+1}">`;
+                        
+                        // تغيير الصورة الرئيسية عند النقر على الصورة المصغرة
+                        thumb.addEventListener('click', function() {
+                            modalMainImage.src = this.querySelector('img').src;
+                        });
+                        
+                        modalThumbnails.appendChild(thumb);
+                    }
+
+                    // إضافة المواصفات
+                    modalSpecs.innerHTML = '';
+                    specs.forEach(spec => {
+                        const specElement = document.createElement('div');
+                        specElement.className = 'modal-spec';
+                        specElement.innerHTML = spec.innerHTML;
+                        modalSpecs.appendChild(specElement);
+                    });
+
+                    // إضافة بيانات إضافية من النافذة المنبثقة الحالية إذا وجدت
+                    const popupDetails = card.querySelector('.product-popup .popup-details');
+                    if (popupDetails) {
+                        const popupDetailItems = popupDetails.querySelectorAll('.popup-detail');
+                        popupDetailItems.forEach(item => {
+                            const label = item.querySelector('.detail-label').textContent;
+                            const value = item.querySelector('.detail-value').textContent;
+                            
+                            const specElement = document.createElement('div');
+                            specElement.className = 'modal-spec';
+                            specElement.innerHTML = `<i class="fas fa-info-circle"></i> ${label} ${value}`;
+                            modalSpecs.appendChild(specElement);
+                        });
+                    }
+
+                    // إضافة التوفر ومعلومات أخرى
+                    const availabilityElement = document.createElement('div');
+                    availabilityElement.className = 'modal-availability';
+                    availabilityElement.innerHTML = '<i class="fas fa-check-circle"></i> متوفر في المخزون';
+                    modalSpecs.appendChild(availabilityElement);
+
+                    // عرض النافذة المنبثقة
+                    modal.style.display = 'block';
                 });
-            }
+            });
+
+            // إضافة مستمعي أحداث للأزرار في النافذة المنبثقة
+            document.querySelector('.modal-add-to-cart').addEventListener('click', function() {
+                alert('تمت إضافة المنتج إلى سلة التسوق');
+            });
+
+            document.querySelector('.modal-add-to-favorites').addEventListener('click', function() {
+                alert('تمت إضافة المنتج إلى المفضلة');
+                this.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c;"></i> تمت الإضافة للمفضلة';
+            });
+
+            // إغلاق النافذة المنبثقة الصغيرة
+            document.querySelectorAll('.popup-close').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const popup = this.closest('.product-popup');
+                    popup.style.display = 'none';
+                });
+            });
         });
     </script>
 </body>
